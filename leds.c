@@ -1,11 +1,11 @@
 
 
 #include <stdio.h>
-#include platform.h
-#include xil_printf.h
-#include xgpio.h
-#include xparameters.h
-#include xstatus.h
+#include "platform.h"
+#include <xil_printf.h>
+#include <xgpio.h>
+#include <xparameters.h>
+#include <xstatus.h>
 #include <sleep.h>
 
 #define LED_CHANNEL 1
@@ -21,7 +21,7 @@ int main()
     XGpio Gpio;
     int Status;
 
-    xil_printf(Program Startedrn);
+    xil_printf("Program Started\r\n");
     
 	/* Initialize the GPIO driver */
     #ifndef SDT
@@ -30,7 +30,7 @@ int main()
 	    Status = XGpio_Initialize(&Gpio, XPAR_AXI_GPIO_0_BASEADDR);
         #endif
 	if (Status != XST_SUCCESS) {
-		xil_printf(Gpio Initialization Failedrn);
+		xil_printf("Gpio Initialization Failed\r\n");
 		return XST_FAILURE;
 	}
     
@@ -40,11 +40,11 @@ int main()
     
     
 
-    print(Hello Worldnr);
+    print("Hello World\r\n");
     while(1){
         u32 switches = XGpio_DiscreteRead(&Gpio, SWITCH_CHANNEL);
         XGpio_DiscreteWrite(&Gpio, LED_CHANNEL, switches);
-        xil_printf(checked! %xnr,switches);
+        xil_printf("checked! %x\r\n", switches);
         usleep(500000);
     }
 
